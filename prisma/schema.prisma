@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+  // NO output path - let it go to node_modules/.prisma
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  handle    String   @unique
+  createdAt DateTime @default(now())
+  tasks     Task[]
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  priority    Priority @default(LOW)
+  status      Status   @default(STANDBY)
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Status {
+  STANDBY
+  IN_PROGRESS
+  EXECUTED
+}
