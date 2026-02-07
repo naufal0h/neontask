@@ -7,11 +7,9 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+  "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.2",
